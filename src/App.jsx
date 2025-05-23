@@ -1,19 +1,25 @@
+import { useState } from 'react'
+
+import Menu from './Menu'
+import SpinStandard from './SpinStandard'
+import SpinCustom from './SpinCustom'
+
 import './App.css'
-import gift1 from './assets/gift-colored.webp'
-import gift2 from './assets/gift-gray.webp'
 
 function App() {
+    const [screen, setScreen] = useState('menu')
+
     return (
-        <div className="container">
-            <div className="gift-block">
-                <img src={gift1} alt="Colored gift" className="gift-img" />
-                <h1 className="label">Standard</h1>
-            </div>
-            <div className="gift-block">
-                <img src={gift2} alt="Gray gift" className="gift-img" />
-                <h1 className="label">Make Custom</h1>
-            </div>
-        </div>
+        <>
+            {screen === 'menu' && (
+                <Menu
+                    onStandard={() => setScreen('spinStandard')}
+                    //onCustom={() => setScreen('spinCustom')}
+                />
+            )}
+            {screen === 'spinStandard' && <SpinStandard />}
+            {screen === 'spinCustom' && <SpinCustom />}
+        </>
     )
 }
 
