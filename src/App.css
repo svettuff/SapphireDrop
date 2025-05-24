@@ -55,18 +55,28 @@ body {
 }
 
 .spin-button {
-  display: block;
-  margin: 24px auto;
-  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
   font-size: 1rem;
-  background-color: #ffc107;
-  color: #111;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffd54f, #ffb300);
+  color: #1a1d2e;
+  box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
   width: 70%;
+  margin: 14px auto 0;
+}
+
+.spin-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 193, 7, 0.5);
 }
 
 .grid-rewards {
@@ -92,4 +102,52 @@ body {
 
 .grid-box:hover {
   background: rgba(255, 255, 255, 0.08);
+}
+
+.reward-box {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.reward-box:hover {
+  transform: translateY(-4px) scale(1.02);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.reward-img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 6px;
+}
+
+.reward-price {
+  font-size: 1rem;
+  font-weight: 600;
+  color: gold;
+  background: #2a2e45;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.star-icon-button {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  margin-left: -2px;
+}
+
+.star-icon-reward {
+  width: 18px;
+  height: 18px;
+  margin-top: -5px;
+  margin-right: 2px;
+  vertical-align: middle;
 }
