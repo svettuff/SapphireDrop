@@ -4,7 +4,7 @@ import flowers from './assets/flowers.webp';
 import trophy from './assets/trophy.webp';
 import diamond from './assets/diamond.webp';
 import hat from './assets/hat.webp';
-import star from './assets/star.webp';
+import star from './assets/sticker.webp';
 
 import giftAsset from './assets/gift-colored.webp'
 

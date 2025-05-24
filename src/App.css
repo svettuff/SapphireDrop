@@ -71,12 +71,7 @@ body {
   transition: all 0.2s ease-in-out;
 
   width: 70%;
-  margin: 14px auto 0;
-}
-
-.spin-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(255, 193, 7, 0.5);
+  margin: 30px auto;
 }
 
 .grid-rewards {
