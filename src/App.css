@@ -189,3 +189,58 @@ body {
   pointer-events: none;
   z-index: 5;
 }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  color: #fff;
+  width: 300px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px);
+}
+
+.modal h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffd54f;
+  margin-bottom: 20px;
+}
+
+.modal-img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.try-again-btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffd54f, #ffb300);
+  color: #1a1d2e;
+  box-shadow: 0 6px 16px rgba(255, 193, 7, 0.4);
+  cursor: pointer;
+}
+
+.modal-text {
+  font-size: 1rem;
+  color: #ccc;
+}

@@ -24,6 +24,7 @@ export default function SpinStandard() {
     const [strip, setStrip]       = useState([]);
     const [spinning, setSpinning] = useState(false);
     const [showGift, setShowGift] = useState(true);
+    const [showModal, setShowModal]   = useState(false);
     const [winner, setWinner]     = useState(null);
 
     const reelRef = useRef(null);
@@ -53,6 +54,7 @@ export default function SpinStandard() {
             reelRef.current.style.transform  = 'translateX(0)';
             setShowGift(true);
             setStrip([]);
+            setShowModal(true);
             console.log('✅ Выпал:', winner);
         }, 4500);
 
@@ -77,6 +79,11 @@ export default function SpinStandard() {
         setStrip(arr);
         setShowGift(false);
         setSpinning(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setWinner(null);
     };
 
     return (
@@ -116,6 +123,19 @@ export default function SpinStandard() {
                     </div>
                 ))}
             </div>
+
+            {showModal && winner && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h2>Congratulations!</h2>
+                        <img src={winner.img} alt={winner.type} className="modal-img" />
+                        <p className="modal-text">Your gift has been sent to you</p>
+                        <button onClick={handleCloseModal} className="try-again-btn">
+                            Try again
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
