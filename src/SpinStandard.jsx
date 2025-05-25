@@ -96,7 +96,9 @@ export default function SpinStandard() {
 
             <button className="spin-button" onClick={startSpin} disabled={spinning}>
                 {spinning ? 'Spinning…' : 'Unlock for 30'}
-                <img src={star} alt="star" className="star-icon-button" />
+                {!spinning && (
+                    <img src={star} alt="star" className="star-icon-button" />
+                )}
             </button>
 
             <div className="grid-rewards">
