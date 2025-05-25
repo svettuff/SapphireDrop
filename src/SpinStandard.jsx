@@ -69,39 +69,48 @@ export default function SpinStandard() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             });
+
             const { invoiceLink, payload } = await inv.json();
-            if (!invoiceLink || !payload)
-                throw new Error('Cant create invoice');
+            if (!invoiceLink || !payload) throw new Error('Cant create invoice');
 
-            await new Promise(resolve =>
-                window.Telegram.WebApp.openInvoice(invoiceLink, resolve)
-            );
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.openInvoice(invoiceLink);
 
-            const giftRes = await fetch(
-                `https://sapphiredrop.ansbackend.ch/get-gift?payload=${payload}`
-            );
+                window.Telegram.WebApp.onEvent('invoiceClosed', async () => {
+                    try {
+                        const giftRes = await fetch(
+                            `https://sapphiredrop.ansbackend.ch/get-gift?payload=${payload}`
+                        );
+                        const { reward } = await giftRes.json();
 
-            const { reward } = await giftRes.json();
-            if (!reward)
-                throw new Error('Reward not found');
+                        if (!reward) throw new Error('Reward not found');
 
-            const pick = rewards.find(r => r.type === reward);
-            if (!pick)
-                throw new Error(`Unknown reward: ${reward}`);
+                        const pick = rewards.find(r => r.type === reward);
+                        if (!pick) throw new Error(`Unknown reward: ${reward}`);
 
-            setWinner(pick);
-            const arr = Array.from({ length: 100 }, () => randomReward());
-            arr[95] = pick;
+                        setWinner(pick);
+                        const arr = Array.from({ length: 100 }, () => randomReward());
+                        arr[95] = pick;
 
-            setStrip(arr);
-            setShowGift(false);
-            setSpinning(true);
+                        setStrip(arr);
+                        setShowGift(false);
+                        setSpinning(true);
+                    } catch (err) {
+                        console.error('Gift error:', err);
+                        alert(err.message || 'Reward error');
+                        setSpinning(false);
+                    }
+                });
+            } else {
+                window.open(invoiceLink, '_blank');
+            }
         } catch (err) {
-            console.error(err);
+            console.error('Invoice error:', err);
             alert(err.message || 'Spin error');
             setSpinning(false);
         }
     };
+
 
     const handleCloseModal = () => {
         setShowModal(false);
