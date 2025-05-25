@@ -48,10 +48,10 @@ export default function SpinStandard() {
         });
 
         const id = setTimeout(() => {
+            setSpinning(false);
             reelRef.current.style.transition = 'none';
             reelRef.current.style.transform  = 'translateX(0)';
             setShowGift(true);
-            setSpinning(false);
             setStrip([]);
             console.log('✅ Выпал:', winner);
         }, 4500);
