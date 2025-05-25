@@ -28,6 +28,7 @@ body {
   flex-direction: column;
   align-items: center;
   width: 320px;
+  height: 290px;
 }
 
 .gift-block:hover {
@@ -150,7 +151,7 @@ body {
 
 .roller-mask {
   width: 320px;
-  height: 295px;
+  height: 290px;
   overflow: hidden;
   position: relative;
   display: flex;
