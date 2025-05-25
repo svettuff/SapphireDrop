@@ -64,21 +64,43 @@ export default function SpinStandard() {
     const startSpin = async () => {
         if (spinning) return;
 
-        const res = await fetch('https://sapphiredrop.ansbackend.ch/generate-gift', { method: 'POST' });
-        const { type } = await res.json();
+        try {
+            const inv = await fetch('https://sapphiredrop.ansbackend.ch/generate-invoice', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const { invoiceLink, payload } = await inv.json();
+            if (!invoiceLink || !payload)
+                throw new Error('Cant create invoice');
 
-        const pick = rewards.find(r => r.type === type);
-        if (!pick) return console.error('Unknown reward:', type);
+            await new Promise(resolve =>
+                window.Telegram.WebApp.openInvoice(invoiceLink, resolve)
+            );
 
-        setWinner(pick);
-        console.log('🎯 Должен выпасть:', pick);
+            const giftRes = await fetch(
+                `https://sapphiredrop.ansbackend.ch/get-gift?payload=${payload}`
+            );
 
-        const arr = Array.from({ length: 100 }, () => randomReward());
-        arr[95] = pick;
+            const { reward } = await giftRes.json();
+            if (!reward)
+                throw new Error('Reward not found');
 
-        setStrip(arr);
-        setShowGift(false);
-        setSpinning(true);
+            const pick = rewards.find(r => r.type === reward);
+            if (!pick)
+                throw new Error(`Unknown reward: ${reward}`);
+
+            setWinner(pick);
+            const arr = Array.from({ length: 100 }, () => randomReward());
+            arr[95] = pick;
+
+            setStrip(arr);
+            setShowGift(false);
+            setSpinning(true);
+        } catch (err) {
+            console.error(err);
+            alert(err.message || 'Spin error');
+            setSpinning(false);
+        }
     };
 
     const handleCloseModal = () => {
