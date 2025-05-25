@@ -165,6 +165,7 @@ body {
   align-items: center;
   will-change: transform;
   gap: 12px;
+  transform: translateZ(0);
 }
 
 .roller-img {
@@ -172,6 +173,8 @@ body {
   height: 80px;
   object-fit: contain;
   flex-shrink: 0;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .roller-indicator {
