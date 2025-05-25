@@ -10,12 +10,12 @@ import star    from './assets/sticker.webp';
 import giftBox from './assets/gift-colored.webp';
 
 const rewards = [
-    { img: teddy,   price: 15  },
-    { img: gift,    price: 25  },
-    { img: flowers, price: 50  },
-    { img: trophy,  price: 100 },
-    { img: diamond, price: 100 },
-    { img: hat,     price: '650+' },
+    { type: 'teddy',   img: teddy,   price: 15   },
+    { type: 'gift',    img: gift,    price: 25   },
+    { type: 'flowers', img: flowers, price: 50   },
+    { type: 'trophy',  img: trophy,  price: 100  },
+    { type: 'diamond', img: diamond, price: 100  },
+    { type: 'hat',     img: hat,     price: '650+' },
 ];
 
 const randomReward = () => rewards[Math.floor(Math.random() * rewards.length)];
@@ -59,10 +59,15 @@ export default function SpinStandard() {
         return () => clearTimeout(id);
     }, [spinning, strip, winner]);
 
-    const startSpin = () => {
+    const startSpin = async () => {
         if (spinning) return;
 
-        const pick = randomReward();
+        const res = await fetch('https://sapphiredrop.ansbackend.ch/generate-gift', { method: 'POST' });
+        const { type } = await res.json();
+
+        const pick = rewards.find(r => r.type === type);
+        if (!pick) return console.error('Unknown reward:', type);
+
         setWinner(pick);
         console.log('🎯 Должен выпасть:', pick);
 
