@@ -9,13 +9,20 @@ import hat     from './assets/hat.webp';
 import star    from './assets/sticker.webp';
 import giftBox from './assets/gift-colored.webp';
 
+import teddyGif   from './gifs/teddy.gif';
+import giftGif    from './gifs/gift.gif';
+import flowersGif from './gifs/flowers.gif';
+import trophyGif  from './gifs/trophy.gif';
+import diamondGif from './gifs/diamond.gif';
+import hatGif     from './gifs/hat.gif';
+
 const rewards = [
-    { type: 'teddy',   img: teddy,   price: 15   },
-    { type: 'gift',    img: gift,    price: 25   },
-    { type: 'flowers', img: flowers, price: 50   },
-    { type: 'trophy',  img: trophy,  price: 100  },
-    { type: 'diamond', img: diamond, price: 100  },
-    { type: 'hat',     img: hat,     price: '650+' },
+    { type: 'teddy',   img: teddy,   gif: teddyGif,   price: 15   },
+    { type: 'gift',    img: gift,    gif: giftGif,    price: 25   },
+    { type: 'flowers', img: flowers, gif: flowersGif, price: 50   },
+    { type: 'trophy',  img: trophy,  gif: trophyGif,  price: 100  },
+    { type: 'diamond', img: diamond, gif: diamondGif, price: 100  },
+    { type: 'hat',     img: hat,     gif: hatGif,     price: '650+' },
 ];
 
 const randomReward = () => rewards[Math.floor(Math.random() * rewards.length)];
@@ -183,7 +190,7 @@ export default function SpinStandard() {
             <div className="grid-rewards">
                 {rewards.map((r, i) => (
                     <div key={i} className="reward-box">
-                        <img src={r.img} alt="" className="reward-img" />
+                        <img src={r.gif} alt={r.type} className="reward-img" />
                         <div className="reward-price">
                             <img src={star} alt="" className="star-icon-reward" />{r.price}
                         </div>
