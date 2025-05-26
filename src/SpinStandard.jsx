@@ -174,7 +174,7 @@ export default function SpinStandard() {
             </div>
 
             <button className="spin-button" onClick={startSpin} disabled={spinning}>
-                {spinning ? 'Spinning…' : 'Unlock for 1'}
+                {spinning ? 'Spinning…' : 'Unlock for 30'}
                 {!spinning && (
                     <img src={star} alt="star" className="star-icon-button" />
                 )}
