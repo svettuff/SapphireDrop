@@ -191,6 +191,11 @@ export default function SpinStandard() {
                 ))}
             </div>
 
+            <p className="disclaimer">
+                By unlocking the box, you acknowledge that each gift is subject to a predefined drop chance,
+                and that delivery of out-of-stock items may be delayed.
+            </p>
+
             {showModal && winner && (
                 <div className="modal-overlay">
                     <div className="modal">
