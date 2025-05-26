@@ -65,52 +65,73 @@ export default function SpinStandard() {
         if (spinning) return;
 
         try {
-            const inv = await fetch('https://sapphiredrop.ansbackend.ch/generate-invoice', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            });
+            const response = await fetch(
+                "https://sapphiredrop.ansbackend.ch/generate-invoice",
+                { method: "POST", headers: { "Content-Type": "application/json" } }
+            );
 
-            const { invoiceLink, payload } = await inv.json();
-            if (!invoiceLink || !payload) throw new Error('Cant create invoice');
+            const data = await response.json();
+            if (!data.invoiceLink) {
+                console.error("Error creating payment link:", data.error);
+                return;
+            }
 
-            if (window.Telegram && window.Telegram.WebApp) {
-                window.Telegram.WebApp.openInvoice(invoiceLink);
+            let link = data.invoiceLink;
 
+            if (!/^https?:\/\//i.test(link)) {
+                link = link.startsWith('$')
+                    ? `https://t.me/${link}`
+                    : `https://t.me/invoice/${link}`;
+            }
+
+            if (window.Telegram?.WebApp) {
+                window.Telegram.WebApp.openInvoice(link);
                 window.Telegram.WebApp.onEvent('invoiceClosed', async () => {
-                    try {
-                        const giftRes = await fetch(
-                            `https://sapphiredrop.ansbackend.ch/get-gift?payload=${payload}`
-                        );
-                        const { reward } = await giftRes.json();
+                    const maxTries= 2;
+                    const pauseMs= 800;
+                    let rewardData = null;
 
-                        if (!reward) throw new Error('Reward not found');
-
-                        const pick = rewards.find(r => r.type === reward);
-                        if (!pick) throw new Error(`Unknown reward: ${reward}`);
-
-                        setWinner(pick);
-                        const arr = Array.from({ length: 100 }, () => randomReward());
-                        arr[95] = pick;
-
-                        setStrip(arr);
-                        setShowGift(false);
-                        setSpinning(true);
-                    } catch (err) {
-                        console.error('Gift error:', err);
-                        alert(err.message || 'Reward error');
-                        setSpinning(false);
+                    for (let i = 0; i < maxTries; i++) {
+                        try {
+                            const resp = await fetch(`https://sapphiredrop.ansbackend.ch/get-gift?payload=${data.payload}`);
+                            if (resp.ok) {
+                                const json = await resp.json();
+                                if (json.reward) {
+                                    rewardData = json.reward;
+                                    break;
+                                }
+                            }
+                        } catch (e) {
+                            console.error('get-gift error:', e);
+                        }
+                        await new Promise(r => setTimeout(r, pauseMs));
                     }
+
+                    if (!rewardData) {
+                        return;
+                    }
+
+                    const pick = rewards.find(r => r.type === rewardData);
+                    if (!pick) {
+                        console.error(`Unknown reward: ${rewardData}`);
+                        return;
+                    }
+
+                    setWinner(pick);
+                    const arr = Array.from({ length: 100 }, () => randomReward());
+                    arr[95]   = pick;
+
+                    setStrip(arr);
+                    setShowGift(false);
+                    setSpinning(true);
                 });
             } else {
-                window.open(invoiceLink, '_blank');
+                window.open(link, "_blank");
             }
         } catch (err) {
-            console.error('Invoice error:', err);
-            alert(err.message || 'Spin error');
-            setSpinning(false);
+            console.error("Error performing request:", err);
         }
     };
-
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -138,7 +159,7 @@ export default function SpinStandard() {
             </div>
 
             <button className="spin-button" onClick={startSpin} disabled={spinning}>
-                {spinning ? 'Spinning…' : 'Unlock for 30'}
+                {spinning ? 'Spinning…' : 'Unlock for 1'}
                 {!spinning && (
                     <img src={star} alt="star" className="star-icon-button" />
                 )}
