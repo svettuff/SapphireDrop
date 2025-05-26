@@ -61,75 +61,90 @@ export default function SpinStandard() {
         return () => clearTimeout(id);
     }, [spinning, strip, winner]);
 
+    const invoiceHandlerRef = useRef(null);
+
     const startSpin = async () => {
         if (spinning) return;
+        setSpinning(true);
 
         try {
-            const response = await fetch(
-                "https://sapphiredrop.ansbackend.ch/generate-invoice",
-                { method: "POST", headers: { "Content-Type": "application/json" } }
+            const res  = await fetch(
+                'https://sapphiredrop.ansbackend.ch/generate-invoice',
+                { method: 'POST', headers: { 'Content-Type': 'application/json' } }
             );
-
-            const data = await response.json();
-            if (!data.invoiceLink) {
-                console.error("Error creating payment link:", data.error);
-                return;
-            }
+            const data = await res.json();
+            if (!data.invoiceLink) throw new Error(data.error || 'No invoice link');
 
             let link = data.invoiceLink;
-
             if (!/^https?:\/\//i.test(link)) {
                 link = link.startsWith('$')
                     ? `https://t.me/${link}`
                     : `https://t.me/invoice/${link}`;
             }
 
-            if (window.Telegram?.WebApp) {
-                window.Telegram.WebApp.openInvoice(link);
-                window.Telegram.WebApp.onEvent('invoiceClosed', async () => {
-                    const maxTries= 2;
-                    const pauseMs= 800;
-                    let rewardData = null;
-
-                    for (let i = 0; i < maxTries; i++) {
-                        try {
-                            const resp = await fetch(`https://sapphiredrop.ansbackend.ch/get-gift?payload=${data.payload}`);
-                            if (resp.ok) {
-                                const json = await resp.json();
-                                if (json.reward) {
-                                    rewardData = json.reward;
-                                    break;
-                                }
-                            }
-                        } catch (e) {
-                            console.error('get-gift error:', e);
-                        }
-                        await new Promise(r => setTimeout(r, pauseMs));
-                    }
-
-                    if (!rewardData) {
-                        return;
-                    }
-
-                    const pick = rewards.find(r => r.type === rewardData);
-                    if (!pick) {
-                        console.error(`Unknown reward: ${rewardData}`);
-                        return;
-                    }
-
-                    setWinner(pick);
-                    const arr = Array.from({ length: 100 }, () => randomReward());
-                    arr[95]   = pick;
-
-                    setStrip(arr);
-                    setShowGift(false);
-                    setSpinning(true);
-                });
-            } else {
-                window.open(link, "_blank");
+            if (!window.Telegram?.WebApp) {
+                window.open(link, '_blank');
+                setSpinning(false);
+                return;
             }
+
+            if (invoiceHandlerRef.current) {
+                window.Telegram.WebApp.offEvent(
+                    'invoiceClosed',
+                    invoiceHandlerRef.current
+                );
+            }
+
+            const onInvoiceClosed = async (event) => {
+                window.Telegram.WebApp.offEvent('invoiceClosed', onInvoiceClosed);
+                invoiceHandlerRef.current = null;
+
+                if (event.status !== 'paid') {
+                    setSpinning(false);
+                    return;
+                }
+
+                const maxTries = 6;
+                const pauseMs  = 800;
+                let   reward   = null;
+
+                for (let i = 0; i < maxTries; i++) {
+                    try {
+                        const r = await fetch(
+                            `https://sapphiredrop.ansbackend.ch/get-gift?payload=${data.payload}`
+                        );
+                        if (r.ok) {
+                            const j = await r.json();
+                            if (j.reward) { reward = j.reward; break; }
+                        }
+                    } catch { /* network error */ }
+                    await new Promise((ok) => setTimeout(ok, pauseMs));
+                }
+
+                if (!reward) {
+                    console.warn('Reward not found yet');
+                    setSpinning(false);
+                    return;
+                }
+
+                const pick = rewards.find((r) => r.type === reward);
+                if (!pick) { console.error('Unknown reward', reward); setSpinning(false); return; }
+
+                setWinner(pick);
+                const arr = Array.from({ length: 100 }, () => randomReward());
+                arr[95] = pick;
+
+                setStrip(arr);
+                setShowGift(false);
+            };
+
+            invoiceHandlerRef.current = onInvoiceClosed;
+            window.Telegram.WebApp.onEvent('invoiceClosed', onInvoiceClosed);
+
+            window.Telegram.WebApp.openInvoice(link);
         } catch (err) {
-            console.error("Error performing request:", err);
+            console.error('startSpin error:', err);
+            setSpinning(false);
         }
     };
 
