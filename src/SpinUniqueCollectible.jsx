@@ -1,35 +1,34 @@
-import { useState, useRef, useEffect } from 'react';
+import giftBox from './assets/gift-gray.webp'
 
-import giftBox from './assets/gift-colored.webp';
-
-import teddy from './assets/teddy.webp';
-import gift from './assets/gift.webp';
-import flowers from './assets/flowers.webp';
-import trophy from './assets/trophy.webp';
-import diamond from './assets/diamond.webp';
-import hat from './assets/hat.webp';
+import calendar from './assets/calendar.webp';
+import candy from './assets/candy.webp';
+import hatt from './assets/hatt.webp';
+import drink from './assets/drink.webp';
+import eye from './assets/eye.webp';
+import rose from './assets/rose.webp';
 
 import star from './assets/sticker.webp';
 
-import teddyGif from './gifs/teddy.gif';
-import giftGif from './gifs/gift.gif';
-import flowersGif from './gifs/flowers.gif';
-import trophyGif from './gifs/trophy.gif';
-import diamondGif from './gifs/diamond.gif';
-import hatGif from './gifs/hat.gif';
+import calendarGif from './gifs/calendar.gif';
+import candyGif from './gifs/candy.gif';
+import hattGif from './gifs/hatt.gif';
+import drinkGif from './gifs/drink.gif';
+import eyeGif from './gifs/eye.gif';
+import roseGif from './gifs/rose.gif';
+import {useEffect, useRef, useState} from "react";
 
 const rewards = [
-    { type: 'teddy',   img: teddy,   gif: teddyGif,   price: 15   },
-    { type: 'gift',    img: gift,    gif: giftGif,    price: 25   },
-    { type: 'flowers', img: flowers, gif: flowersGif, price: 50   },
-    { type: 'trophy',  img: trophy,  gif: trophyGif,  price: 100  },
-    { type: 'diamond', img: diamond, gif: diamondGif, price: 100  },
-    { type: 'hat',     img: hat,     gif: hatGif,     price: '650+' },
+    { type: 'calendar', img: calendar, gif: calendarGif, price: '280+'   },
+    { type: 'candy',    img: candy,    gif: candyGif,    price: '330+'   },
+    { type: 'hatt',     img: hatt,     gif: hattGif,     price: '550+'   },
+    { type: 'drink',    img: drink,    gif: drinkGif,    price: '700+'  },
+    { type: 'eye',      img: eye,      gif: eyeGif,      price: '1200+'  },
+    { type: 'rose',     img: rose,     gif: roseGif,     price: '5000+' },
 ];
 
 const randomReward = () => rewards[Math.floor(Math.random() * rewards.length)];
 
-export default function SpinStandard() {
+function SpinUniqueCollectible() {
     const [strip, setStrip] = useState([]);
     const [spinning, setSpinning] = useState(false);
     const [showGift, setShowGift] = useState(true);
@@ -78,7 +77,7 @@ export default function SpinStandard() {
 
         try {
             const res  = await fetch(
-                'https://sapphiredrop.ansbackend.ch/generate-invoice',
+                'https://sapphiredrop.ansbackend.ch/generate-invoice-unique-collectible', // TODO
                 { method: 'POST', headers: { 'Content-Type': 'application/json' } }
             );
             const data = await res.json();
@@ -168,7 +167,7 @@ export default function SpinStandard() {
                 {showGift ? (
                     <>
                         <img src={giftBox} alt="box" className="gift-img" />
-                        <h1 className="label">Unlock Standard</h1>
+                        <h1 className="label">Unlock Unique Collectible</h1>
                     </>
                 ) : (
                     <div className="roller-mask" ref={maskRef}>
@@ -183,7 +182,7 @@ export default function SpinStandard() {
             </div>
 
             <button className="spin-button" onClick={startSpin} disabled={spinning}>
-                {spinning ? 'Spinning…' : 'Unlock for 30'}
+                {spinning ? 'Spinning…' : 'Unlock for 500'}
                 {!spinning && (
                     <img src={star} alt="star" className="star-icon-button" />
                 )}
@@ -220,3 +219,5 @@ export default function SpinStandard() {
         </div>
     );
 }
+
+export default SpinUniqueCollectible
