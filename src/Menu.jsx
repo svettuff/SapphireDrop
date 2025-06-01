@@ -10,7 +10,7 @@ function Menu({ onStandard, onCustom }) {
             </div>
             <div className="gift-block" onClick={onCustom}>
                 <img src={gift2} alt="Gray gift" className="gift-img" />
-                <h1 className="label">Upcoming Soon...</h1>
+                <h1 className="label">Unlock Unique Collectible</h1>
             </div>
         </div>
     )
