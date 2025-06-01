@@ -14,7 +14,7 @@ function App() {
             {screen === 'menu' && (
                 <Menu
                     onStandard={() => setScreen('spinStandard')}
-                    //onCustom={() => setScreen('spinCustom')}
+                    onCustom={() => setScreen('spinCustom')}
                 />
             )}
             {screen === 'spinStandard' && <SpinStandard />}
