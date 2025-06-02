@@ -28,7 +28,7 @@ const rewards = [
 
 const randomReward = () => rewards[Math.floor(Math.random() * rewards.length)];
 
-function SpinUniqueCollectible() {
+function SpinUniqueCollectible({ onBack }) {
     const [strip, setStrip] = useState([]);
     const [spinning, setSpinning] = useState(false);
     const [showGift, setShowGift] = useState(true);
@@ -37,6 +37,19 @@ function SpinUniqueCollectible() {
 
     const reelRef = useRef(null);
     const maskRef = useRef(null);
+
+    useEffect(() => {
+        const tg = window.Telegram?.WebApp;
+        if (!tg?.BackButton) return;
+
+        tg.BackButton.show();
+        tg.BackButton.onClick(onBack);
+
+        return () => {
+            tg.BackButton.offClick(onBack);
+            tg.BackButton.hide();
+        };
+    }, [onBack]);
 
     useEffect(() => {
         if (!spinning || strip.length === 0) return;

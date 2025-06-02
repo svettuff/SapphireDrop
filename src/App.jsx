@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useCallback, useState} from 'react'
 
 import Menu from './Menu'
 import SpinStandard from './SpinStandard'
@@ -8,6 +8,7 @@ import './App.css'
 
 function App() {
     const [screen, setScreen] = useState('menu')
+    const goMenu = useCallback(() => setScreen('menu'), []);
 
     return (
         <>
@@ -17,10 +18,16 @@ function App() {
                     onUniqueCollectible={() => setScreen('spinUniqueCollectible')}
                 />
             )}
-            {screen === 'spinStandard' && <SpinStandard />}
-            {screen === 'spinUniqueCollectible' && <SpinUniqueCollectible />}
+
+            {screen === 'spinStandard' && (
+                <SpinStandard onBack={goMenu} />
+                )}
+
+            {screen === 'spinUniqueCollectible' && (
+                <SpinUniqueCollectible onBack={goMenu} />
+            )}
         </>
-    )
+    );
 }
 
 export default App
