@@ -22,18 +22,12 @@ body {
   padding: 24px 16px;
   border-radius: 20px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
   backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 320px;
   height: 290px;
-}
-
-.gift-block:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
 .label {
@@ -48,11 +42,6 @@ body {
 .gift-img {
   width: 240px;
   height: auto;
-  transition: transform 0.3s ease;
-}
-
-.gift-block:hover .gift-img {
-  transform: scale(1.03);
 }
 
 .spin-button {
@@ -93,11 +82,6 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
   color: #ccc;
-  transition: background 0.2s;
-}
-
-.grid-box:hover {
-  background: rgba(255, 255, 255, 0.08);
 }
 
 .reward-box {
@@ -249,6 +233,7 @@ body {
   margin-right: auto;
   line-height: 1.4;
 }
+
 .disclaimer a {
   color: #888;
   text-decoration: underline;
