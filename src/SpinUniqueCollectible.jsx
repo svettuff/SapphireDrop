@@ -1,4 +1,4 @@
-import giftBox from './assets/gift-gray.webp'
+import giftBox from './assets/gift-gold.webp'
 
 import calendar from './assets/calendar.webp';
 import candy from './assets/candy.webp';

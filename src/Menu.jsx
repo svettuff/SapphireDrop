@@ -1,5 +1,5 @@
 import gift1 from './assets/gift-colored.webp'
-import gift2 from './assets/gift-gray.webp'
+import gift2 from './assets/gift-gold.webp'
 
 function Menu({ onStandard, onUniqueCollectible }) {
     return (
