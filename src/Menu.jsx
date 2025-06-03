@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import gift1 from './assets/gift-colored.webp'
 import gift2 from './assets/gift-gold.webp'
+import gift3 from './assets/gift-gray.webp'
 
 import calendarGif from './gifs/calendar.gif';
 import candyGif    from './gifs/candy.gif';
@@ -69,14 +70,34 @@ function Menu({ onStandard, onUniqueCollectible }) {
             <RecentGiftsStrip />
 
             <div className="gift-block" onClick={onStandard}>
-                <img src={gift1} alt="Colored gift" className="gift-img" />
-                <h1 className="label">Unlock Standard</h1>
+                <img src={gift1} alt="Gift" className="gift-img" />
+                <div className="gift-label-container">
+                    <h1 className="label">Unlock Standard</h1>
+                </div>
             </div>
 
             <div className="gift-block" onClick={onUniqueCollectible}>
-                <img src={gift2} alt="Gray gift" className="gift-img" />
-                <h1 className="label">Unlock Unique Collectible</h1>
+                <img src={gift2} alt="Gold gift" className="gift-img" />
+                <div className="gift-label-container">
+                    <h1 className="label">Unlock Collectible</h1>
+                </div>
             </div>
+
+            <div className="gift-block">
+                <img src={gift3} alt="Grey gift" className="gift-img" />
+                <div className="gift-label-container">
+                    <h1 className="label">Upcoming Soon...</h1>
+                </div>
+            </div>
+
+            <div className="gift-block">
+                <img src={gift3} alt="Grey gift" className="gift-img" />
+                <div className="gift-label-container">
+                    <h1 className="label">Upcoming Soon...</h1>
+                </div>
+            </div>
+
+
         </div>
     )
 }
