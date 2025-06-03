@@ -1,3 +1,5 @@
+import {useEffect, useRef, useState} from "react";
+
 import giftBox from './assets/gift-gold.webp'
 
 import calendar from './assets/calendar.webp';
@@ -15,7 +17,6 @@ import hattGif from './gifs/hatt.gif';
 import drinkGif from './gifs/drink.gif';
 import eyeGif from './gifs/eye.gif';
 import roseGif from './gifs/rose.gif';
-import {useEffect, useRef, useState} from "react";
 
 const rewards = [
     { type: 'calendar', img: calendar, gif: calendarGif, price: '280+'   },
