@@ -12,7 +12,7 @@ body {
 .container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 25px;
   align-items: center;
 }
 
@@ -45,10 +45,10 @@ body {
 }
 
 .gift-label-container {
-  flex: 1;                          /* занимает всё оставшееся пространство */
+  flex: 1;
   display: flex;
-  justify-content: center;         /* центр по горизонтали внутри контейнера */
-  align-items: center;             /* центр по вертикали */
+  justify-content: center;
+  align-items: center;
 }
 
 .spin-gift-block {
