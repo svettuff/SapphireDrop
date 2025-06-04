@@ -17,6 +17,7 @@ import flowersGif  from './gifs/flowers.gif';
 import trophyGif   from './gifs/trophy.gif';
 import diamondGif  from './gifs/diamond.gif';
 import hatGif      from './gifs/hat.gif';
+import star from "./assets/sticker.webp";
 
 const rewardGifs = {
     calendar: calendarGif,
@@ -73,6 +74,9 @@ function Menu({ onStandard, onUniqueCollectible }) {
                 <img src={gift1} alt="Gift" className="gift-img" />
                 <div className="gift-label-container">
                     <h1 className="label">Unlock Standard</h1>
+                    <div className="gift-price">
+                        <img src={star} alt="" className="star-icon-reward" />30
+                    </div>
                 </div>
             </div>
 
@@ -80,6 +84,9 @@ function Menu({ onStandard, onUniqueCollectible }) {
                 <img src={gift2} alt="Gold gift" className="gift-img" />
                 <div className="gift-label-container">
                     <h1 className="label">Unlock Collectible</h1>
+                    <div className="gift-price">
+                        <img src={star} alt="" className="star-icon-reward" />500
+                    </div>
                 </div>
             </div>
 

@@ -36,19 +36,30 @@ body {
   flex-shrink: 0;
 }
 
+.gift-label-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .gift-block .label {
   color: #f0f0f0;
   font-size: 1.2rem;
   font-weight: 600;
   letter-spacing: 0.3px;
-  text-align: left;
+  text-align: center;
 }
 
-.gift-label-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.gift-price {
+  font-size: 1rem;
+  font-weight: 600;
+  color: gold;
+  background: #2a2e45;
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-top: -4px;
 }
 
 .spin-gift-block {
