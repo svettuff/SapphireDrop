@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useTonConnectUI } from '@tonconnect/ui-react';
-import {SendTransactionRequest} from "@tonconnect/ui-react";
 
 import gift1 from './assets/gift-colored.webp'
 import gift2 from './assets/gift-gold.webp'
