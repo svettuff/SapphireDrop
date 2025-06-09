@@ -414,3 +414,59 @@ body {
 .balance-plus-button::after {
   transform: translate(-50%, -50%) rotate(90deg);
 }
+
+/* Top-Up Modal */
+
+.topup-modal h2 {
+  margin-top: 0;
+}
+
+.input-wrapper {
+  position: relative;
+  margin: 20px 0 28px;
+}
+
+.topup-input {
+  width: 100%;
+  padding: 12px 46px 12px 14px;
+  border-radius: 12px;
+  border: none;
+  background: #2a2e45;
+  color: #ffd54f;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.modal-ton-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+
+.topup-btn {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffd54f, #ffb300);
+  color: #1a1d2e;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255,193,7,.4);
+}
+
+.topup-input::-webkit-outer-spin-button,
+.topup-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.topup-input[type="number"] {
+  -moz-appearance: textfield;
+}

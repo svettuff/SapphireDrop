@@ -34,22 +34,71 @@ const rewardGifs = {
     hat:      hatGif,
 };
 
-function Balance() {
-    const [tons, setTons] = useState(0);
+function TopUpModal({ open, onClose, onSubmit }) {
+    const [value, setValue] = useState('');
+
+    if (!open) return null;
+
+    const handleSubmit = () => {
+        const amount = parseFloat(value.replace(',', '.'));
+        if (!isNaN(amount) && amount > 0) {
+            onSubmit(amount);
+            setValue('');
+        }
+    };
 
     return (
-        <div className="balance-block">
-            <div className="balance-price">
-                <img src={ton} alt="TON" className="balance-ton-icon" />
-                <span className="balance-count">{tons}</span>
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal topup-modal" onClick={e => e.stopPropagation()}>
+                <div className="input-wrapper">
+                    <input
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                        value={value}
+                        onChange={e => setValue(e.target.value)}
+                        className="topup-input"
+                    />
+                    <img src={ton} alt="TON" className="modal-ton-icon" />
+                </div>
+
+                <button className="topup-btn" onClick={handleSubmit}>
+                    Top-Up
+                </button>
+            </div>
+        </div>
+    );
+}
+
+function Balance() {
+    const [tons, setTons] = useState(0);
+    const [open, setOpen] = useState(false);
+
+    return (
+        <>
+            <div className="balance-block">
+                <div className="balance-price">
+                    <img src={ton} alt="TON" className="balance-ton-icon" />
+                    <span className="balance-count">{tons}</span>
+                </div>
+
+                <button
+                    className="balance-plus-button"
+                    onClick={() => setOpen(true)}
+                    aria-label="TopUp"
+                ></button>
             </div>
 
-            <button
-                className="balance-plus-button"
-                onClick={() => setTons((p) => p + 1)}
-            >
-            </button>
-        </div>
+            <TopUpModal
+                open={open}
+                onClose={() => setOpen(false)}
+                onSubmit={amount => {
+                    setTons(p => p + amount);
+                    setOpen(false);
+                }}
+            />
+        </>
     );
 }
 
