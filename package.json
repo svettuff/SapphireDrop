@@ -13,6 +13,10 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@ton/ton": "^15.2.1",
+    "@tonconnect/sdk": "^3.1.0",
+    "@tonconnect/ui-react": "^2.1.0",
+    "buffer": "^6.0.3",
     "gh-pages": "^6.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useTonConnectUI } from '@tonconnect/ui-react';
+import {SendTransactionRequest} from "@tonconnect/ui-react";
 
 import gift1 from './assets/gift-colored.webp'
 import gift2 from './assets/gift-gold.webp'
@@ -36,15 +38,45 @@ const rewardGifs = {
 
 function TopUpModal({ open, onClose, onSubmit }) {
     const [value, setValue] = useState('');
+    const [tonConnectUI] = useTonConnectUI();
+
+    useEffect(() => {
+        window.Telegram?.WebApp?.ready();
+    }, []);
 
     if (!open) return null;
 
-    const handleSubmit = () => {
-        const amount = parseFloat(value.replace(',', '.'));
-        if (!isNaN(amount) && amount > 0) {
-            onSubmit(amount);
-            setValue('');
+    const handleSubmit = async () => {
+        const tg = window.Telegram.WebApp;
+        const userId = tg?.initDataUnsafe?.user?.id;
+        if (!userId)
+            return;
+
+        if (!tonConnectUI.connected) {
+            await tonConnectUI.openModal();
+            if (!tonConnectUI.connected) return;
         }
+
+        const amount = parseFloat(value.replace(',', '.'));
+        if (!amount || amount <= 0)
+            return;
+
+        const nanoAmount = Math.round(amount * 1e9).toString();
+
+        const transaction = {
+            validUntil: Math.floor(Date.now() / 1e3) + 600,
+            messages: [
+                {
+                    address: "UQA5PajFfxGphZ86hqDt7Fp3jccE40r49AJxy64gl8LqTLJA",
+                    amount: nanoAmount,
+                }
+            ]
+        };
+
+        await tonConnectUI.sendTransaction(transaction)
+        onSubmit(amount);
+        setValue('');
+        onClose();
     };
 
     return (
