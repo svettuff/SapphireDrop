@@ -1,15 +1,29 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/SapphireDrop/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sapphire Drop</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script type="module" crossorigin src="/SapphireDrop/assets/index-Dyn6121z.js"></script>
-    <link rel="stylesheet" crossorigin href="/SapphireDrop/assets/index-ByZBsbEd.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/SapphireDrop/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sapphire Drop</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+    ;(function () {
+      if (!window.Buffer) {
+        function strToArr(s) { return Uint8Array.from(s, c => c.charCodeAt(0)); }
+        window.Buffer = {
+          from: (input, enc) =>
+                  enc === 'base64'
+                          ? strToArr(atob(input))
+                          : strToArr(String(input))
+        };
+      }
+      window.global = window;
+    })();
+  </script>
+  <script type="module" crossorigin src="/SapphireDrop/assets/index-Dyn6121z.js"></script>
+  <link rel="stylesheet" crossorigin href="/SapphireDrop/assets/index-ByZBsbEd.css">
+</head>
+<body>
+<div id="root"></div>
+</body>
 </html>
