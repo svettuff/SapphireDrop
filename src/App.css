@@ -57,9 +57,16 @@ body {
   font-weight: 600;
   color: gold;
   background: #2a2e45;
-  padding: 4px 12px;
+  padding: 6px 12px;
   border-radius: 12px;
   margin-top: -4px;
+}
+
+.gift-price-ton-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  margin-bottom: -5px;
 }
 
 .spin-gift-block {
@@ -155,15 +162,14 @@ body {
   border-radius: 12px;
 }
 
-.star-icon-button {
+.ton-icon-button {
   width: 20px;
   height: 20px;
   vertical-align: middle;
   margin-left: -2px;
-  margin-top: -3px;
 }
 
-.star-icon-reward {
+.ton-icon-reward {
   width: 18px;
   height: 18px;
   margin-top: -5px;
@@ -283,14 +289,14 @@ body {
   text-decoration: underline;
 }
 
+/* Latest Drop */
+
 .recent-strip-container {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 20px rgba(255, 213, 79, 0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   padding: 12px 14px;
   border-radius: 18px;
 }
-
 
 .recent-strip-header {
   font-size: 1.2rem;
@@ -324,6 +330,8 @@ body {
   object-fit: contain;
 }
 
+/* Maintain */
+
 .maintenance-overlay {
   position: fixed;
   top: 0;
@@ -341,4 +349,68 @@ body {
   color: white;
   text-align: center;
   font-size: 24px;
+}
+
+/* Balance */
+
+.balance-block {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px 16px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.balance-price {
+  background: #2a2e45;
+  padding: 6px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.balance-ton-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.balance-count {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffd54f;
+  min-width: 2.8ch;
+  text-align: right;
+}
+
+.balance-plus-button {
+  position: relative;
+  width: 10px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2a2e45;
+  cursor: pointer;
+  outline: none;
+}
+
+.balance-plus-button::before,
+.balance-plus-button::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+}
+
+.balance-plus-button::after {
+  transform: translate(-50%, -50%) rotate(90deg);
 }

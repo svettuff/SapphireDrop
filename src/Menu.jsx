@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import gift1 from './assets/gift-colored.webp'
 import gift2 from './assets/gift-gold.webp'
-import gift3 from './assets/gift-gray.webp'
 
 import calendarGif from './gifs/calendar.gif';
 import candyGif    from './gifs/candy.gif';
@@ -17,7 +16,8 @@ import flowersGif  from './gifs/flowers.gif';
 import trophyGif   from './gifs/trophy.gif';
 import diamondGif  from './gifs/diamond.gif';
 import hatGif      from './gifs/hat.gif';
-import star from "./assets/sticker.webp";
+
+import ton from "./assets/ton.webp";
 
 const rewardGifs = {
     calendar: calendarGif,
@@ -33,6 +33,25 @@ const rewardGifs = {
     diamond:  diamondGif,
     hat:      hatGif,
 };
+
+function Balance() {
+    const [tons, setTons] = useState(0);
+
+    return (
+        <div className="balance-block">
+            <div className="balance-price">
+                <img src={ton} alt="TON" className="balance-ton-icon" />
+                <span className="balance-count">{tons}</span>
+            </div>
+
+            <button
+                className="balance-plus-button"
+                onClick={() => setTons((p) => p + 1)}
+            >
+            </button>
+        </div>
+    );
+}
 
 function RecentGiftsStrip() {
     const [latest, setLatest] = useState([]);
@@ -64,18 +83,19 @@ function RecentGiftsStrip() {
     );
 }
 
-
 function Menu({ onStandard, onUniqueCollectible }) {
     return (
         <div className="container">
+
             <RecentGiftsStrip />
+            <Balance />
 
             <div className="gift-block" onClick={onStandard}>
                 <img src={gift1} alt="Gift" className="gift-img" />
                 <div className="gift-label-container">
                     <h1 className="label">Unlock Standard</h1>
                     <div className="gift-price">
-                        <img src={star} alt="" className="star-icon-reward" />30
+                        <img src={ton} alt="" className="gift-price-ton-icon" />0.15
                     </div>
                 </div>
             </div>
@@ -85,25 +105,10 @@ function Menu({ onStandard, onUniqueCollectible }) {
                 <div className="gift-label-container">
                     <h1 className="label">Unlock Collectible</h1>
                     <div className="gift-price">
-                        <img src={star} alt="" className="star-icon-reward" />500
+                        <img src={ton} alt="" className="gift-price-ton-icon" />2.5
                     </div>
                 </div>
             </div>
-
-            <div className="gift-block">
-                <img src={gift3} alt="Grey gift" className="gift-img" />
-                <div className="gift-label-container">
-                    <h1 className="label">Upcoming Soon...</h1>
-                </div>
-            </div>
-
-            <div className="gift-block">
-                <img src={gift3} alt="Grey gift" className="gift-img" />
-                <div className="gift-label-container">
-                    <h1 className="label">Upcoming Soon...</h1>
-                </div>
-            </div>
-
 
         </div>
     )

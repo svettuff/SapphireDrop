@@ -9,7 +9,7 @@ import drink from './assets/drink.webp';
 import eye from './assets/eye.webp';
 import rose from './assets/rose.webp';
 
-import star from './assets/sticker.webp';
+import ton from "./assets/ton.webp";
 
 import calendarGif from './gifs/calendar.gif';
 import candyGif from './gifs/candy.gif';
@@ -198,7 +198,7 @@ function SpinUniqueCollectible({ onBack }) {
             <button className="spin-button" onClick={startSpin} disabled={spinning}>
                 {spinning ? 'Spinning…' : 'Unlock for 500'}
                 {!spinning && (
-                    <img src={star} alt="star" className="star-icon-button" />
+                    <img src={ton} alt="ton" className="ton-icon-button" />
                 )}
             </button>
 
@@ -207,7 +207,7 @@ function SpinUniqueCollectible({ onBack }) {
                     <div key={i} className="reward-box">
                         <img src={r.gif} alt={r.type} className="reward-img" />
                         <div className="reward-price">
-                            <img src={star} alt="" className="star-icon-reward" />{r.price}
+                            <img src={ton} alt="" className="ton-icon-reward" />{r.price}
                         </div>
                     </div>
                 ))}
